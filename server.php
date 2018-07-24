@@ -6,6 +6,15 @@
 class server
 {
 	private $conn;
+
+	public static function authenticate($header_params)
+	{
+		if ($header_params->username == 'admin' && $header_params->password == 'admin') {
+			return true;
+		} 
+		else throw new SOAPfault("Wrong User", 401);
+	}
+	
 	function __construct()
 	{
 		$this->conn = (is_null($this->conn)) ? self::connect() : $this->conn;

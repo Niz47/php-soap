@@ -13,6 +13,14 @@ class client
 								 'trace' => 1
 		 						 );
 		$this->instance = new SoapClient(NULL, $params);
+
+		// set the header
+		$auth_param = new stdClass();
+		$auth_param->username = 'admin';
+		$auth_param->password = 'admin';
+		$header_params = new SoapVar($auth_param, SOAP_ENC_OBJECT);
+		$header = new SoapHeader('localhost', 'authenticate', $header_params, false);
+		$this->instance->__setSoapHeaders(array($header));
 	}
 
 	public function getName($id_array)
